@@ -212,7 +212,7 @@ IO :: struct {
 	set_clipboard_text_fn:                   proc "c"(user_data : rawptr, text : cstring),
 	clipboard_user_data:                     rawptr,
 	ime_set_input_screen_pos_fn:             proc "c"(x, y : i32),
-	ime_window_handle:                       rawptr,
+	ime_WindowHandle:                       rawptr,
 	mouse_pos:                               Vec2,
 	mouse_down:                              [5]bool,
 	mouse_wheel:                             f32,

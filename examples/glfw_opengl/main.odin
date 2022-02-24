@@ -4,8 +4,8 @@ import "core:log"
 import "core:runtime"
 import "core:strings"
 
-import gl   "shared:odin-gl"
-import glfw "shared:odin-glfw"
+import gl   "vendor:OpenGL"
+import glfw "vendor:glfw"
 
 DESIRED_GL_MAJOR_VERSION :: 4;
 DESIRED_GL_MINOR_VERSION :: 5;
@@ -87,7 +87,7 @@ get_logger :: proc() -> log.Logger {
     return log.create_console_logger(opt = logger_opts);
 }
 
-key_callback :: proc "c" (window: glfw.Window_Handle, key, scancode, action, mods: i32) {
+key_callback :: proc "c" (window: glfw.WindowHandle, key, scancode, action, mods: i32) {
     context = runtime.default_context();
 
     if glfw.Key_State(action) == .PRESS {
@@ -195,7 +195,7 @@ Imgui_State :: struct {
     opengl_state: imgl.OpenGL_State,
 }
 
-init_imgui_state :: proc(window: glfw.Window_Handle) -> Imgui_State {
+init_imgui_state :: proc(window: glfw.WindowHandle) -> Imgui_State {
     res := Imgui_State{};
 
     imgui.create_context();

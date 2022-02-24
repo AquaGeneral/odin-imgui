@@ -6,7 +6,7 @@ import "core:strings";
 import "core:runtime";
 
 import sdl "shared:odin-sdl2";
-import gl  "shared:odin-gl";
+import gl  "vendor:OpenGL";
 
 import imgui "../..";
 import imgl  "../../impl/opengl";

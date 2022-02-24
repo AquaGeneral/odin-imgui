@@ -10,7 +10,7 @@ import imgui "../..";
 SDL_State :: struct {
     time: u64,
     mouse_down: [3]bool,
-    cursor_handles: [imgui.Mouse_Cursor.Count]^sdl.Cursor,
+    CursorHandles: [imgui.Mouse_Cursor.Count]^sdl.Cursor,
 }
 
 setup_state :: proc(using state: ^SDL_State) {
@@ -44,15 +44,15 @@ setup_state :: proc(using state: ^SDL_State) {
     io.get_clipboard_text_fn = get_clipboard_text;
     io.set_clipboard_text_fn = set_clipboard_text;
     
-    cursor_handles[imgui.Mouse_Cursor.Arrow]      = sdl.create_system_cursor(sdl.System_Cursor.Arrow);
-    cursor_handles[imgui.Mouse_Cursor.TextInput]  = sdl.create_system_cursor(sdl.System_Cursor.IBeam);
-    cursor_handles[imgui.Mouse_Cursor.ResizeAll]  = sdl.create_system_cursor(sdl.System_Cursor.Size_All);
-    cursor_handles[imgui.Mouse_Cursor.ResizeNs]   = sdl.create_system_cursor(sdl.System_Cursor.Size_NS);
-    cursor_handles[imgui.Mouse_Cursor.ResizeEw]   = sdl.create_system_cursor(sdl.System_Cursor.Size_WE);
-    cursor_handles[imgui.Mouse_Cursor.ResizeNesw] = sdl.create_system_cursor(sdl.System_Cursor.Size_NESW);
-    cursor_handles[imgui.Mouse_Cursor.ResizeNwse] = sdl.create_system_cursor(sdl.System_Cursor.Size_NWSE);
-    cursor_handles[imgui.Mouse_Cursor.Hand]       = sdl.create_system_cursor(sdl.System_Cursor.Hand);
-    cursor_handles[imgui.Mouse_Cursor.NotAllowed] = sdl.create_system_cursor(sdl.System_Cursor.No);
+    CursorHandles[imgui.Mouse_Cursor.Arrow]      = sdl.create_system_cursor(sdl.System_Cursor.Arrow);
+    CursorHandles[imgui.Mouse_Cursor.TextInput]  = sdl.create_system_cursor(sdl.System_Cursor.IBeam);
+    CursorHandles[imgui.Mouse_Cursor.ResizeAll]  = sdl.create_system_cursor(sdl.System_Cursor.Size_All);
+    CursorHandles[imgui.Mouse_Cursor.ResizeNs]   = sdl.create_system_cursor(sdl.System_Cursor.Size_NS);
+    CursorHandles[imgui.Mouse_Cursor.ResizeEw]   = sdl.create_system_cursor(sdl.System_Cursor.Size_WE);
+    CursorHandles[imgui.Mouse_Cursor.ResizeNesw] = sdl.create_system_cursor(sdl.System_Cursor.Size_NESW);
+    CursorHandles[imgui.Mouse_Cursor.ResizeNwse] = sdl.create_system_cursor(sdl.System_Cursor.Size_NWSE);
+    CursorHandles[imgui.Mouse_Cursor.Hand]       = sdl.create_system_cursor(sdl.System_Cursor.Hand);
+    CursorHandles[imgui.Mouse_Cursor.NotAllowed] = sdl.create_system_cursor(sdl.System_Cursor.No);
 } 
 
 process_event :: proc(e: sdl.Event, state: ^SDL_State) {
@@ -83,7 +83,7 @@ process_event :: proc(e: sdl.Event, state: ^SDL_State) {
             io.key_ctrl  = sdl.get_mod_state() & (sdl.Keymod.LCtrl|sdl.Keymod.RCtrl)   != nil;
             io.key_alt   = sdl.get_mod_state() & (sdl.Keymod.LAlt|sdl.Keymod.RAlt)     != nil;
 
-            when ODIN_OS == "windows" {
+            when ODIN_OS == .Windows {
                 io.key_super = false;
             } else {
                 io.key_super = sdl.get_mod_state() & (sdl.Keymod.LGui|sdl.Keymod.RGui) != nil;
@@ -122,9 +122,9 @@ update_mouse :: proc(state: ^SDL_State, window: ^sdl.Window) {
         if(io.mouse_draw_cursor || desired_cursor == .None) {
             sdl.show_cursor(i32(sdl.Bool.False));
         } else {
-            chosen_cursor := state.cursor_handles[imgui.Mouse_Cursor.Arrow];
-            if state.cursor_handles[desired_cursor] != nil {
-                chosen_cursor = state.cursor_handles[desired_cursor];
+            chosen_cursor := state.CursorHandles[imgui.Mouse_Cursor.Arrow];
+            if state.CursorHandles[desired_cursor] != nil {
+                chosen_cursor = state.CursorHandles[desired_cursor];
             }
             sdl.set_cursor(chosen_cursor);
             sdl.show_cursor(i32(sdl.Bool.True));
