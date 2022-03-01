@@ -176,8 +176,10 @@ key_callback :: proc "c" (window: glfw.WindowHandle, key, scancode, action, mods
 
     io := imgui.get_io();
 
-    if      action == i32(glfw.PRESS)   do io.keys_down[key] = true;
-    else if action == i32(glfw.RELEASE) do io.keys_down[key] = false;
+    if key >= 0 {
+        if      action == i32(glfw.PRESS)   do io.keys_down[key] = true;
+        else if action == i32(glfw.RELEASE) do io.keys_down[key] = false;
+    }
 
     io.key_ctrl  = io.keys_down[glfw.KEY_LEFT_CONTROL] || io.keys_down[glfw.KEY_RIGHT_CONTROL];
     io.key_shift = io.keys_down[glfw.KEY_LEFT_SHIFT] || io.keys_down[glfw.KEY_RIGHT_SHIFT];
